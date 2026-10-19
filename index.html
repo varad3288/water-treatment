@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Water Treatment Live</title>
+  <title>Vidyam Labs · Interactive Water Treatment & Engineering Chemistry Simulations</title>
   <style>
     @font-face {
       font-family: 'Archivo';
@@ -1051,55 +1051,914 @@
     .notes {
       display: none;
     }
+  
+    /* Vidyam Labs Landing & Square Card Grid */
+    main.landing-mode {
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      justify-content: flex-start !important;
+      padding-block: 16px 36px !important;
+      scrollbar-gutter: stable;
+    }
+
+    .slide.landing.on {
+      display: block;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      height: auto;
+      max-height: none;
+    }
+
+    .landing-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .landing-hero {
+      text-align: center;
+      max-width: 760px;
+      margin: 12px auto 4px;
+      width: 100%;
+    }
+
+    .landing-hero .eyebrow {
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+      color: var(--ink2);
+    }
+
+    .landing-hero h1 {
+      font: 800 clamp(30px, 3.8vw, 44px)/1.06 var(--f-display);
+      letter-spacing: -0.035em;
+      margin: 0 auto 10px;
+      color: var(--ink);
+    }
+
+    .landing-hero .lede {
+      font-size: 14.5px;
+      line-height: 1.5;
+      color: var(--ink2);
+      margin: 0 auto;
+      max-width: 68ch;
+    }
+
+    /* Search Bar */
+    .search-bar-wrap {
+      margin: 20px auto 0;
+      max-width: 580px;
+      width: 100%;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 0 14px;
+      gap: 10px;
+      box-shadow: 0 2px 8px rgba(15, 35, 31, 0.05);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px rgba(15, 35, 31, 0.08);
+    }
+
+    .search-box input[type="search"] {
+      flex: 1;
+      border: 0;
+      outline: none;
+      background: transparent;
+      font: 400 14px var(--f-body);
+      color: var(--ink);
+      padding: 11px 0;
+      min-width: 0;
+    }
+
+    .search-box input[type="search"]::-webkit-search-cancel-button {
+      display: none;
+    }
+
+    .search-box input[type="search"]::placeholder {
+      color: var(--ink2);
+      opacity: 0.72;
+      font-size: 13.5px;
+    }
+
+    .search-box .search-icon {
+      flex: none;
+      color: var(--ink2);
+      opacity: 0.8;
+    }
+
+    .search-box .clear-btn {
+      background: none;
+      border: 0;
+      cursor: pointer;
+      font: 600 16px var(--f-mono);
+      color: var(--ink2);
+      padding: 2px 6px;
+      border-radius: 2px;
+      line-height: 1;
+    }
+
+    .search-box .clear-btn:hover {
+      color: var(--ink);
+      background: var(--panel);
+    }
+
+    .search-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 7px;
+      padding: 0 2px;
+      font: 500 11px var(--f-mono);
+      color: var(--ink2);
+    }
+
+    .search-hint kbd, .anim-control-pill kbd, .foot kbd {
+      font: 600 10.5px var(--f-mono);
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 0 4px;
+      color: var(--ink);
+    }
+
+    /* Square Card Grid */
+    .sim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      width: 100%;
+    }
+
+    .sim-card {
+      aspect-ratio: 1 / 1;
+      min-height: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.18s ease,
+                  background-color 0.18s ease,
+                  box-shadow 0.18s ease;
+      user-select: none;
+      -webkit-user-select: none;
+      text-align: left;
+    }
+
+    .sim-card:hover, .sim-card:focus-visible {
+      background: var(--paper);
+      border-color: var(--ink);
+      box-shadow: 0 10px 28px rgba(15, 35, 31, 0.08);
+      transform: translateY(-3px);
+      outline: none;
+    }
+
+    .sim-card:active {
+      transform: translateY(0);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-num {
+      font: 600 12.5px var(--f-mono);
+      color: var(--ink2);
+      letter-spacing: 0.05em;
+    }
+
+    .card-tag {
+      font: 600 10px var(--f-mono);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 2px;
+      border: 1px solid var(--c, var(--rule));
+      color: var(--c, var(--ink2));
+      background: var(--paper);
+    }
+
+    .card-body {
+      margin: auto 0;
+    }
+
+    .card-title {
+      font: 800 17px/1.22 var(--f-display);
+      color: var(--ink);
+      margin: 0 0 6px;
+      letter-spacing: -0.015em;
+    }
+
+    .card-desc {
+      font: 400 12.5px/1.45 var(--f-body);
+      color: var(--ink2);
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-foot {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .card-chem {
+      font: 500 11px/1.3 var(--f-mono);
+      color: var(--ink2);
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 4px 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font: 600 11px var(--f-mono);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .card-action .arr {
+      transition: transform 0.15s ease;
+    }
+
+    .sim-card:hover .card-action .arr {
+      transform: translateX(4px);
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 48px 16px;
+      background: var(--panel);
+      border: 1px dashed var(--rule);
+      border-radius: 4px;
+      margin: 12px 0 24px;
+    }
+
+    .no-results p {
+      font: 500 14px var(--f-body);
+      color: var(--ink);
+      margin: 0 0 12px;
+    }
+
+    /* Landing Legend */
+    .landing-legend {
+      border: 1px solid var(--rule);
+      background: var(--panel);
+      padding: 16px 20px;
+      border-radius: 4px;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .legend-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 6px;
+    }
+
+    .legend-header h4 {
+      margin: 0;
+      font: 600 11.5px var(--f-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .legend-sub {
+      font: 400 10.5px var(--f-mono);
+      color: var(--ink2);
+    }
+
+    .landing-shortcuts {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--rule);
+      font: 400 11px var(--f-mono);
+      color: var(--ink2);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+    }
+
+    .landing-shortcuts b {
+      color: var(--ink);
+    }
+
+    /* Header Brand & Navigation Refinement */
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-link {
+      font: 700 13px var(--f-mono);
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 0;
+    }
+
+    .brand-link:hover {
+      opacity: 0.85;
+    }
+
+    .brand-badge {
+      font: 600 10px var(--f-mono);
+      background: var(--ink);
+      color: var(--paper);
+      padding: 1px 5px;
+      border-radius: 2px;
+      letter-spacing: 0.04em;
+    }
+
+    .btn-back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 3px 9px;
+      cursor: pointer;
+      font: 600 11px var(--f-mono);
+      color: var(--ink);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: all 0.15s;
+    }
+
+    .btn-back-home:hover {
+      background: var(--paper);
+      border-color: var(--ink);
+    }
+
+    .curr-sim-badge {
+      font: 600 11.5px var(--f-mono);
+      color: var(--ink2);
+      letter-spacing: 0.04em;
+      border-left: 1px solid var(--rule);
+      padding-left: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .anim-control-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font: 400 11px var(--f-mono);
+      color: var(--ink2);
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 2px 8px;
+      white-space: nowrap;
+    }
+
+    /* Footer styling */
+    .foot-sim-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-return {
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 4px 10px;
+      cursor: pointer;
+      font: 600 11.5px var(--f-mono);
+      color: var(--ink);
+      transition: all 0.15s;
+    }
+
+    .btn-return:hover {
+      border-color: var(--ink);
+      background: var(--paper);
+    }
+
+    .foot-sim-hint {
+      font-size: 11.5px;
+      color: var(--ink2);
+    }
+
+    .foot-landing-hint {
+      font-size: 11.5px;
+      color: var(--ink2);
+    }
+
+  
+    /* === Enhanced Mobile Responsiveness & Suite Header Styles === */
+    .suite-header {
+      margin-top: 4px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .suite-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 5px;
+    }
+
+    .suite-badge {
+      font: 600 10px var(--f-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 2px 7px;
+      border-radius: 2px;
+    }
+
+    .suite-domain {
+      font: 500 11px var(--f-mono);
+      color: var(--ink2);
+    }
+
+    .suite-title {
+      font: 800 clamp(18px, 2.5vw, 24px)/1.2 var(--f-display);
+      color: var(--ink);
+      margin: 0 0 4px;
+      letter-spacing: -0.02em;
+    }
+
+    .suite-desc {
+      font: 400 13px/1.45 var(--f-body);
+      color: var(--ink2);
+      margin: 0;
+      max-width: 78ch;
+    }
+
+    .btn.step-btn {
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    /* Mobile & Tablet Specific Breakpoints */
+    @media (max-width: 860px) {
+      body {
+        padding: 0 max(12px, env(safe-area-inset-right, 0px)) 0 max(12px, env(safe-area-inset-left, 0px));
+      }
+
+      main {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        justify-content: flex-start !important;
+        padding-block: 10px 24px !important;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .slide.topic.on {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+        height: auto !important;
+        max-height: none !important;
+      }
+
+      .stagewrap {
+        width: 100%;
+      }
+
+      .stagewrap canvas {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 800 / 520 !important;
+        max-height: none !important;
+        touch-action: pan-y;
+      }
+
+      .theory {
+        max-height: none !important;
+        overflow-y: visible !important;
+        padding-bottom: 16px;
+      }
+
+      .now {
+        font-size: 13px;
+        line-height: 1.45;
+        padding: 8px 10px;
+      }
+
+      .pc {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .bar {
+        padding-inline: 8px;
+        gap: 8px;
+        height: 42px;
+      }
+
+      .curr-sim-badge {
+        display: none !important;
+      }
+
+      .anim-control-pill {
+        display: none !important;
+      }
+
+      .btn-back-home {
+        padding: 4px 8px;
+        font-size: 10.5px;
+      }
+
+      .tools button {
+        padding: 4px 8px;
+        font-size: 10.5px;
+      }
+
+      .foot {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding-block: 8px;
+      }
+
+      .foot-sim-nav {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .foot-sim-hint {
+        display: none;
+      }
+
+      .foot .hint {
+        display: none;
+      }
+
+      .search-box input[type="search"] {
+        font-size: 16px; /* Avoid iOS Safari automatic zoom */
+      }
+    }
+
+    @media (max-width: 600px) {
+      .landing-hero h1 {
+        font-size: 30px;
+      }
+
+      .landing-hero .lede {
+        font-size: 13px;
+      }
+
+      .search-status {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+      }
+
+      .sim-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+
+      .sim-card {
+        aspect-ratio: auto !important;
+        min-height: auto !important;
+        padding: 16px !important;
+        gap: 12px;
+      }
+
+      .card-title {
+        font-size: 16px;
+      }
+
+      .card-desc {
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+        font-size: 12px;
+      }
+
+      .key {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 10px;
+      }
+
+      .landing-shortcuts {
+        font-size: 10.5px;
+        gap: 4px 10px;
+      }
+
+      .ctl .row {
+        gap: 4px;
+      }
+
+      .btn {
+        padding: 5px 8px;
+        font-size: 11px;
+      }
+
+      .seg {
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-auto-flow: row !important;
+      }
+
+      .seg button {
+        border-left: 1px solid var(--ink);
+        border-top: 1px solid var(--ink);
+        padding: 6px 8px;
+      }
+
+      .seg button:nth-child(2n+1) {
+        border-left: 0;
+      }
+
+      .seg button:nth-child(1),
+      .seg button:nth-child(2) {
+        border-top: 0;
+      }
+    }
+
+    @media (min-width: 601px) and (max-width: 940px) {
+      .sim-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+      .sim-card {
+        aspect-ratio: 1 / 1;
+        padding: 16px;
+      }
+    }
+
+    @media (max-width: 440px) {
+      .brand-link span:last-child {
+        display: none;
+      }
+      .btn-back-home span {
+        display: none;
+      }
+      .btn-back-home::after {
+        content: 'Labs';
+      }
+      .seg {
+        grid-template-columns: 1fr !important;
+      }
+      .seg button {
+        border-left: 0 !important;
+        border-top: 1px solid var(--ink);
+      }
+      .seg button:first-child {
+        border-top: 0;
+      }
+      .key {
+        grid-template-columns: 1fr;
+      }
+    }
+
   </style>
 </head>
 
 <body>
 
-  <header class="bar">
-    <div class="brand">Water Chemistry · FE Sem I</div>
-    <nav class="rail" id="rail" aria-label="Slides"></nav>
+    <header class="bar">
+    <div class="brand-wrap">
+      <a href="#home" class="brand-link" id="brandLink" title="Vidyam Labs Home">
+        <span class="brand-badge">VL</span>
+        <span>Vidyam Labs</span>
+      </a>
+      <button id="btnHeaderBack" class="btn-back-home" title="Return to Vidyam Labs (Esc)" style="display:none;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>All Simulations</span>
+      </button>
+      <span class="curr-sim-badge" id="currSimBadge" style="display:none;"></span>
+    </div>
     <div class="tools">
+      <span class="anim-control-pill" id="animControlPill" style="display:none;" title="Animation controls: comma (,) and dot (.)">
+        <kbd>,</kbd> <kbd>.</kbd> step &bull; <kbd>Space</kbd> play
+      </span>
       <button id="btnNotes" aria-pressed="false" title="Speaker notes (N)">Notes</button>
-      
       <button id="btnFs" title="Fullscreen (F)">Fullscreen</button>
     </div>
   </header>
 
   <main id="deck">
 
-    <!-- 1 · TITLE -->
-    <section class="slide title on" data-name="Intro">
-      <div>
-        <p class="eyebrow">Engineering Chemistry · Water Technology &amp; Steam Systems</p>
-        <h1>Water treatment &amp; boiler troubles</h1>
-        <p class="lede">Four external water treatment technologies (Zeolite, Ion Exchange, Electrodialysis, Reverse Osmosis) and boiler troubles. Interactive thermodynamic models beside exam-focused theory.</p>
-        <p class="by">Presented by <b>Varad</b> · FE Semester I · SPPU</p>
-        <ul class="agenda" id="agenda"></ul>
+    <!-- 1 · VIDYAM LABS LANDING -->
+    <section class="slide landing on" data-name="Vidyam Labs">
+      <div class="landing-wrap">
+        <div class="landing-hero">
+          <p class="eyebrow">Open Engineering Simulation &bull; Virtual Laboratory Platform</p>
+          <h1>Vidyam Labs</h1>
+          <p class="lede">An open platform for interactive multi-disciplinary engineering simulations, thermodynamic systems, scientific computing, and computational project models. Explore live interactive engineering modules below.</p>
+          <div class="search-bar-wrap">
+            <div class="search-box">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="search" id="simSearch" placeholder="Search all engineering simulations, projects, and computational models..." autocomplete="off" spellcheck="false" aria-label="Search simulations">
+              <button id="clearSearch" class="clear-btn" title="Clear search" aria-label="Clear search" hidden>&times;</button>
+            </div>
+            <div class="search-status" id="searchStatus" aria-live="polite">
+              <span id="simCount">7 Active Modules available</span>
+              <span class="search-hint">Press <kbd>/</kbd> to search</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="suite-header">
+          <div class="suite-badge-row">
+            <span class="suite-badge">Featured Suite</span>
+            <span class="suite-domain">Chemical &bull; Thermal &bull; Environmental Engineering</span>
+          </div>
+          <h2 class="suite-title">Water Treatment Technologies &amp; Boiler Thermodynamics</h2>
+          <p class="suite-desc">Interactive physics and ion-exchange models demonstrating feed-water softening, membrane hyperfiltration, and boiler operating hazard mechanisms.</p>
+        </div>
+
+        <div class="sim-grid" id="simGrid">
+          <!-- 1: Hardness & Scale -->
+          <div class="sim-card" data-idx="1" data-tags="hardness scale boiler calcium magnesium caco3 thermal precipitation carbonate decomposition" tabindex="0" role="button" aria-label="Launch Hardness & Boiler Scale Simulation">
+            <div class="card-top">
+              <span class="card-num">01</span>
+              <span class="card-tag" style="--c: var(--ca)">Scale Formation</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Hardness &amp; Boiler Scale</h3>
+              <p class="card-desc">Thermal decomposition of dissolved bicarbonates into rock-hard insulating CaCO₃ crystal scale on heated boiler walls.</p>
+            </div>
+            <div class="card-foot">
+              <div class="card-chem">Ca(HCO₃)₂ <span class="arr">&rarr;</span> CaCO₃&darr; + CO₂&uarr;</div>
+              <div class="card-action">Launch Simulation <span class="arr">&rarr;</span></div>
+            </div>
+          </div>
+
+          <!-- 2: Zeolite -->
+          <div class="sim-card" data-idx="2" data-tags="zeolite sodium aluminosilicate permutit cation exchange softener brine regeneration nacl hardness" tabindex="0" role="button" aria-label="Launch Zeolite Softening Simulation">
+            <div class="card-top">
+              <span class="card-num">02</span>
+              <span class="card-tag" style="--c: var(--na)">Cation Softener</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Zeolite Softening Process</h3>
+              <p class="card-desc">Porous hydrated sodium aluminosilicate (Na₂Ze) bed capturing Ca²⁺/Mg²⁺ and releasing harmless Na⁺, with 10% brine regeneration.</p>
+            </div>
+            <div class="card-foot">
+              <div class="card-chem">Na₂Ze + Ca²⁺ <span class="arr">&rarr;</span> CaZe + 2Na⁺</div>
+              <div class="card-action">Launch Simulation <span class="arr">&rarr;</span></div>
+            </div>
+          </div>
+
+          <!-- 3: Ion Exchange -->
+          <div class="sim-card" data-idx="3" data-tags="ion exchange demineralisation dm plant cation anion resin h+ oh- regeneration hcl naoh zero tds" tabindex="0" role="button" aria-label="Launch Ion Exchange Demineralisation Simulation">
+            <div class="card-top">
+              <span class="card-num">03</span>
+              <span class="card-tag" style="--c: var(--oh)">Demineraliser</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Ion Exchange (DM Plant)</h3>
+              <p class="card-desc">Separate cation (R-H) and anion (R-OH) column exchange producing ultra-pure, zero-TDS mineral-free water for high-pressure boilers.</p>
+            </div>
+            <div class="card-foot">
+              <div class="card-chem">H⁺ + OH⁻ <span class="arr">&rarr;</span> H₂O (Pure Feed)</div>
+              <div class="card-action">Launch Simulation <span class="arr">&rarr;</span></div>
+            </div>
+          </div>
+
+          <!-- 4: Electrodialysis -->
+          <div class="sim-card" data-idx="4" data-tags="electrodialysis ed membrane cem aem electric dc field desalination concentrate diluate brackish" tabindex="0" role="button" aria-label="Launch Electrodialysis Simulation">
+            <div class="card-top">
+              <span class="card-num">04</span>
+              <span class="card-tag" style="--c: var(--cl)">Selective Membrane</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Electrodialysis (ED)</h3>
+              <p class="card-desc">Alternating cation &amp; anion selective membranes under DC electric potential segregating saline feed into pure diluate and brine.</p>
+            </div>
+            <div class="card-foot">
+              <div class="card-chem">CEM (Na⁺) &bull; AEM (Cl⁻) + DC</div>
+              <div class="card-action">Launch Simulation <span class="arr">&rarr;</span></div>
+            </div>
+          </div>
+
+          <!-- 5: Reverse Osmosis -->
+          <div class="sim-card" data-idx="5" data-tags="reverse osmosis ro hyperfiltration osmotic pressure polyamide semi-permeable sea water brackish desalination" tabindex="0" role="button" aria-label="Launch Reverse Osmosis Simulation">
+            <div class="card-top">
+              <span class="card-num">05</span>
+              <span class="card-tag" style="--c: var(--h2o)">Hyperfiltration</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Reverse Osmosis (RO)</h3>
+              <p class="card-desc">Hydraulic pressure exceeding natural osmotic threshold (P &gt; &pi;) forcing pure water backward through dense polyamide membranes.</p>
+            </div>
+            <div class="card-foot">
+              <div class="card-chem">P &gt; &pi; (Osmotic Pressure Barrier)</div>
+              <div class="card-action">Launch Simulation <span class="arr">&rarr;</span></div>
+            </div>
+          </div>
+
+          <!-- 6: Priming & Foaming -->
+          <div class="sim-card" data-idx="6" data-tags="boiler troubles priming foaming carry-over steam foam wet steam droplets erosion turbine" tabindex="0" role="button" aria-label="Launch Priming & Foaming Simulation">
+            <div class="card-top">
+              <span class="card-num">06</span>
+              <span class="card-tag" style="--c: var(--glow)">Boiler Troubles</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Priming &amp; Foaming</h3>
+              <p class="card-desc">Rapid water droplet carry-over and persistent alkali/oil bubble froth spilling into steam headers and eroding turbine blades.</p>
+            </div>
+            <div class="card-foot">
+              <div class="card-chem">Droplet Carry-Over &amp; Foam Spillage</div>
+              <div class="card-action">Launch Simulation <span class="arr">&rarr;</span></div>
+            </div>
+          </div>
+
+          <!-- 7: Compare -->
+          <div class="sim-card" data-idx="7" data-tags="process comparison matrix engineering selection zeolite dm ro ed hardness tds selection criteria" tabindex="0" role="button" aria-label="Launch Process Comparison Matrix">
+            <div class="card-top">
+              <span class="card-num">07</span>
+              <span class="card-tag" style="--c: var(--so4)">Selection Matrix</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Process Matrix &amp; Selection</h3>
+              <p class="card-desc">Engineering decision matrix comparing residual hardness, TDS rejection, regeneration economics, and operating envelopes.</p>
+            </div>
+            <div class="card-foot">
+              <div class="card-chem">Zeolite vs DM vs ED vs RO</div>
+              <div class="card-action">View Matrix <span class="arr">&rarr;</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="noResults" class="no-results" hidden>
+          <p>No simulations found matching "<span id="noResultsTerm"></span>"</p>
+          <button id="btnResetSearch" class="btn sm">Clear Search Filter</button>
+        </div>
+
+        <aside class="landing-legend">
+          <div class="legend-header">
+            <h4>Ion Key &bull; Standardized Notation</h4>
+            <span class="legend-sub">Color-coded particle markers in all interactive simulation stages</span>
+          </div>
+          <div class="key">
+            <div><span class="dot" style="--c:var(--ca)">Ca</span><span>Calcium<small class="chem">Ca²⁺</small></span></div>
+            <div><span class="dot" style="--c:var(--mg)">Mg</span><span>Magnesium<small class="chem">Mg²⁺</small></span></div>
+            <div><span class="dot" style="--c:var(--na)">Na</span><span>Sodium<small class="chem">Na⁺</small></span></div>
+            <div><span class="dot" style="--c:var(--h)">H</span><span>Hydrogen<small class="chem">H⁺</small></span></div>
+            <div><span class="dot" style="--c:var(--oh)">OH</span><span>Hydroxide<small class="chem">OH⁻</small></span></div>
+            <div><span class="dot" style="--c:var(--cl)">Cl</span><span>Chloride<small class="chem">Cl^{−}</small></span></div>
+            <div><span class="dot" style="--c:var(--so4)">SO</span><span>Sulphate<small class="chem">SO_{4}^{2−}</small></span></div>
+            <div><span class="dot" style="--c:var(--hco3)">HCO</span><span>Bicarbonate<small class="chem">HCO_{3}^{−}</small></span></div>
+          </div>
+          <div class="landing-shortcuts">
+            <span><b>Space:</b> Play / Pause step</span> &bull; 
+            <span><b>, / .:</b> Previous / Next animation</span> &bull; 
+            <span><b>R:</b> Reset simulation</span> &bull; 
+            <span><b>Esc:</b> Return to Vidyam Labs</span>
+          </div>
+        </aside>
       </div>
-      <aside class="legend">
-        <h3>Ion Key · Standardized Notation</h3>
-        <p class="sub">Color-coded markers in all 5 simulation stages</p>
-        <div class="key">
-          <div><span class="dot" style="--c:var(--ca)">Ca</span><span>Calcium<small class="chem">Ca²⁺</small></span></div>
-          <div><span class="dot" style="--c:var(--mg)">Mg</span><span>Magnesium<small class="chem">Mg²⁺</small></span></div>
-          <div><span class="dot" style="--c:var(--na)">Na</span><span>Sodium<small class="chem">Na⁺</small></span></div>
-          <div><span class="dot" style="--c:var(--h)">H</span><span>Hydrogen<small class="chem">H⁺</small></span></div>
-          <div><span class="dot" style="--c:var(--oh)">OH</span><span>Hydroxide<small class="chem">OH⁻</small></span></div>
-          <div><span class="dot" style="--c:var(--cl)">Cl</span><span>Chloride<small class="chem">Cl^{−}</small></span></div>
-          <div><span class="dot" style="--c:var(--so4)">SO</span><span>Sulphate<small class="chem">SO_{4}^{2−}</small></span></div>
-          <div><span class="dot" style="--c:var(--hco3)">HCO</span><span>Bicarbonate<small class="chem">HCO_{3}^{−}</small></span></div>
-        </div>
-        <div class="quick-guide">
-          <h4>Deck Controls</h4>
-          <ul>
-            <li><b>Space:</b> Play / pause live canvas simulation</li>
-            <li><b>← / →:</b> Navigate between presentation slides</li>
-            <li><b>N / T:</b> Toggle speaker notes / dark theme</li>
-          </ul>
-        </div>
-      </aside>
-      <div class="notes">Open with the industrial stakes: raw water contains dissolved mineral salts that precipitate under heat, forming insulating scale that ruptures boiler tubes and causes catastrophic plant downtime. Introduce the presentation structure: three treatment technologies (Zeolite softening, Ion Exchange demineralisation, Electrodialysis) and the physical-chemical boiler failures that occur when feed water is substandard (Priming &amp; Foaming). Point to the ion color key once so the audience recognizes every particle in the live simulations.</div>
+      <div class="notes">Welcome to Vidyam Labs — an interactive virtual laboratory for all engineering simulations, thermodynamic systems, and computational project models. Featured suite: Industrial Water Technology and Boiler Operating Systems.</div>
     </section>
 
     <!-- 2 · HARD WATER -->
@@ -1321,11 +2180,13 @@
 
   </main>
 
-  <footer class="foot">
-    <button id="prev" aria-label="Previous slide">← Prev</button>
-    <button id="next" aria-label="Next slide">Next →</button>
-    <span id="count">1 / 8</span>
-    <span class="hint">Space: play · ← →: slides · N: notes · T: theme</span>
+    <footer class="foot">
+    <div id="footSimNav" class="foot-sim-nav" style="display:none;">
+      <button id="btnFooterBack" class="btn-return" aria-label="Back to Vidyam Labs">&larr; Back to Vidyam Labs</button>
+      <span class="foot-sim-hint">Animation controls: press <kbd>,</kbd> (prev step) or <kbd>.</kbd> (next step) &bull; <kbd>Space</kbd> play/pause</span>
+    </div>
+    <span id="footLandingHint" class="foot-landing-hint">Vidyam Labs &bull; Open Engineering Simulation &amp; Project Platform</span>
+    <span class="hint">N: Notes &bull; F: Fullscreen &bull; Esc: Home</span>
   </footer>
 
   <div id="notes" hidden>
@@ -1633,7 +2494,12 @@
         start() { this.buildUI(); this.reset(); }
         buildUI() {
           const ctl = this.sec.querySelector('.ctl');
-          ctl.innerHTML = '<div class="row"><button class="btn pri" data-a="play">Play</button><button class="btn" data-a="reset">Reset</button><span class="grow"></span><span class="lab">Speed</span>'
+          ctl.innerHTML = '<div class="row">'
+            + '<button class="btn step-btn" data-a="prev" title="Previous step (,)">◂ Step</button>'
+            + '<button class="btn pri" data-a="play">Play</button>'
+            + '<button class="btn step-btn" data-a="next" title="Next step (.)">Step ▸</button>'
+            + '<button class="btn" data-a="reset">Reset</button>'
+            + '<span class="grow"></span><span class="lab">Speed</span>'
             + [0.5, 1, 2].map(s => '<button class="btn sm' + (s === 1 ? ' on' : '') + '" data-s="' + s + '" aria-pressed="' + (s === 1) + '">' + s + '×</button>').join('')
             + '</div><div class="seg">' + this.stages.map((s, i) => '<button data-i="' + i + '"><b>' + s.name + '</b><i></i></button>').join('') + '</div>';
           this.btnPlay = ctl.querySelector('[data-a=play]');
@@ -1643,6 +2509,8 @@
             b.blur();
             if (b.dataset.a === 'play') this.toggle();
             else if (b.dataset.a === 'reset') this.reset();
+            else if (b.dataset.a === 'prev') this.prevStage();
+            else if (b.dataset.a === 'next') this.nextStage();
             else if (b.dataset.s) {
               this.speed = +b.dataset.s;
               ctl.querySelectorAll('[data-s]').forEach(x => {
@@ -1650,7 +2518,7 @@
                 x.classList.toggle('on', on);
                 x.setAttribute('aria-pressed', on);
               });
-            } else if (b.dataset.i !== undefined) this.jump(+b.dataset.i);
+            } else if (b.dataset.i !== undefined) this.jump(+b.dataset.i, true);
           });
           this.segs = [...ctl.querySelectorAll('.seg button')];
           this.now = this.sec.querySelector('.now');
@@ -1667,6 +2535,10 @@
         finished() { return !this.playing && this.stage === this.stages.length - 1 && this.isDone(); }
         toggle() {
           if (this.finished()) this.reset();
+          else if (this.isDone()) {
+            this.jump(this.stage, true);
+            return;
+          }
           this.playing = !this.playing;
           this.sync();
         }
@@ -1682,8 +2554,8 @@
           this.sync();
           this.draw();
         }
-        jump(i) {
-          const was = this.playing;
+        jump(i, autostart) {
+          const was = autostart !== undefined ? autostart : this.playing;
           this.ps = [];
           this.log = [];
           this.init();
@@ -1695,8 +2567,8 @@
           this.sync();
           this.draw();
         }
-        prevStage() { this.jump(Math.max(0, this.stage - 1)); }
-        nextStage() { this.jump(Math.min(this.stages.length - 1, this.stage + 1)); }
+        prevStage() { if (this.stage > 0) this.jump(this.stage - 1, true); }
+        nextStage() { if (this.stage < this.stages.length - 1) this.jump(this.stage + 1, true); }
         go(i) { this.stage = i; this.t = 0; this.ui(); }
         ui() {
           const st = this.stages[this.stage];
@@ -1705,7 +2577,7 @@
           this.eqEls.forEach((li, i) => li.classList.toggle('on', (st.eq || []).includes(i)));
         }
         sync() {
-          this.btnPlay.textContent = this.playing ? 'Pause' : (this.finished() ? 'Replay' : (this.clock > 0 ? 'Resume' : 'Play'));
+          this.btnPlay.textContent = this.playing ? 'Pause' : (this.isDone() ? 'Replay' : (this.clock > 0 ? 'Resume' : 'Play'));
         }
         prog() { const st = this.stages[this.stage]; return st.prog ? st.prog(this) : this.t / st.dur; }
         bars() {
@@ -1722,8 +2594,8 @@
             this.update(d);
             this.ps = this.ps.filter(p => !p.dead);
             if (this.isDone()) {
-              if (this.stage < this.stages.length - 1) this.go(this.stage + 1);
-              else { this.playing = false; this.sync(); }
+              this.playing = false;
+              this.sync();
             }
           }
           this.draw();
@@ -3465,37 +4337,96 @@
         const k = s.dataset.sim;
         if (k && CLS[k]) sims[i] = new CLS[k](s);
       });
-      const rail = document.getElementById('rail'),
-        count = document.getElementById('count'),
-        notes = document.getElementById('notes'),
-        btnNotes = document.getElementById('btnNotes');
 
-      const SHORT_NAMES = ['Intro', 'Hard water', 'Zeolite', 'Ion-Ex', 'ED', 'RO', 'Boiler', 'Compare'];
-      slides.forEach((s, i) => {
-        const b = document.createElement('button');
-        const shortName = SHORT_NAMES[i] || s.dataset.name;
-        b.innerHTML = '<span>' + String(i + 1).padStart(2, '0') + '</span>' + shortName;
-        b.title = (i + 1) + '. ' + s.dataset.name;
-        b.addEventListener('click', () => { b.blur(); show(i); });
-        rail.appendChild(b);
-      });
+      const notes = document.getElementById('notes'),
+        btnNotes = document.getElementById('btnNotes'),
+        btnHeaderBack = document.getElementById('btnHeaderBack'),
+        currSimBadge = document.getElementById('currSimBadge'),
+        animControlPill = document.getElementById('animControlPill'),
+        footSimNav = document.getElementById('footSimNav'),
+        footLandingHint = document.getElementById('footLandingHint'),
+        btnFooterBack = document.getElementById('btnFooterBack'),
+        brandLink = document.getElementById('brandLink');
 
-      const agenda = document.getElementById('agenda');
-      const agendaTopics = [
-        { i: 1, title: 'Hardness & Scale' },
-        { i: 2, title: 'Zeolite Process' },
-        { i: 3, title: 'Ion Exchange (DM)' },
-        { i: 4, title: 'Electrodialysis' },
-        { i: 5, title: 'Reverse Osmosis (RO)' },
-        { i: 6, title: 'Boiler Troubles' },
-        { i: 7, title: 'Process Comparison' }
-      ];
-      agendaTopics.forEach(item => {
-        const li = document.createElement('li');
-        li.innerHTML = '<button><b>' + String(item.i + 1).padStart(2, '0') + '</b>' + item.title + '</button>';
-        li.firstChild.addEventListener('click', () => show(item.i));
-        agenda.appendChild(li);
-      });
+      /* Vidyam Labs Search & Card Grid Navigation */
+      const simGrid = document.getElementById('simGrid'),
+        simSearch = document.getElementById('simSearch'),
+        clearSearch = document.getElementById('clearSearch'),
+        simCount = document.getElementById('simCount'),
+        noResults = document.getElementById('noResults'),
+        noResultsTerm = document.getElementById('noResultsTerm'),
+        btnResetSearch = document.getElementById('btnResetSearch');
+
+      function filterSims() {
+        if (!simSearch || !simGrid) return;
+        const q = simSearch.value.trim().toLowerCase();
+        let matches = 0;
+        const cards = simGrid.querySelectorAll('.sim-card');
+        cards.forEach(c => {
+          const text = (c.textContent + ' ' + (c.dataset.tags || '')).toLowerCase();
+          const match = !q || text.includes(q);
+          c.style.display = match ? 'flex' : 'none';
+          if (match) matches++;
+        });
+        if (simCount) {
+          simCount.textContent = q ? (matches + ' matching simulation' + (matches === 1 ? '' : 's')) : '7 Simulations available';
+        }
+        if (clearSearch) clearSearch.hidden = !q;
+        if (noResults) {
+          noResults.hidden = matches > 0;
+          if (noResultsTerm) noResultsTerm.textContent = simSearch.value;
+        }
+      }
+
+      if (simSearch) {
+        simSearch.addEventListener('input', filterSims);
+        simSearch.addEventListener('keydown', e => {
+          if (e.key === 'Escape') {
+            simSearch.value = '';
+            filterSims();
+            simSearch.blur();
+          } else if (e.key === 'Enter') {
+            const first = simGrid.querySelector('.sim-card:not([style*="display: none"])');
+            if (first && first.dataset.idx) {
+              show(+first.dataset.idx);
+            }
+          }
+        });
+      }
+
+      if (clearSearch) {
+        clearSearch.addEventListener('click', () => {
+          simSearch.value = '';
+          filterSims();
+          simSearch.focus();
+        });
+      }
+
+      if (btnResetSearch) {
+        btnResetSearch.addEventListener('click', () => {
+          simSearch.value = '';
+          filterSims();
+          simSearch.focus();
+        });
+      }
+
+      if (simGrid) {
+        simGrid.addEventListener('click', e => {
+          const card = e.target.closest('.sim-card');
+          if (card && card.dataset.idx) {
+            show(+card.dataset.idx);
+          }
+        });
+        simGrid.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            const card = e.target.closest('.sim-card');
+            if (card && card.dataset.idx) {
+              e.preventDefault();
+              show(+card.dataset.idx);
+            }
+          }
+        });
+      }
 
       let cur = 0;
       function show(i) {
@@ -3505,15 +4436,34 @@
         slides[cur].classList.remove('on');
         cur = i;
         slides[i].classList.add('on');
-        [...rail.children].forEach((b, k) => b.classList.toggle('on', k === i));
-        count.textContent = (i + 1) + ' / ' + slides.length;
+
+        const isLanding = i === 0;
+        const mainEl = document.querySelector('main');
+        if (mainEl) mainEl.classList.toggle('landing-mode', isLanding);
+
+        if (btnHeaderBack) btnHeaderBack.style.display = isLanding ? 'none' : 'inline-flex';
+        if (currSimBadge) {
+          currSimBadge.style.display = isLanding ? 'none' : 'inline-flex';
+          currSimBadge.textContent = isLanding ? '' : (slides[i].dataset.name || 'Simulation ' + i);
+        }
+        if (animControlPill) {
+          animControlPill.style.display = (isLanding || !sims[i]) ? 'none' : 'inline-flex';
+        }
+        if (footSimNav) footSimNav.style.display = isLanding ? 'none' : 'inline-flex';
+        if (footLandingHint) footLandingHint.style.display = isLanding ? 'inline' : 'none';
+
         const n = slides[i].querySelector('.notes');
         notes.querySelector('p').textContent = n ? n.textContent : '';
-        try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) { }
+        try { history.replaceState(null, '', isLanding ? '#home' : '#' + i); } catch (e) { }
         const s = sims[i];
         if (s) { s.fit(); s.draw(); s.bars(); }
         window.scrollTo(0, 0);
       }
+
+      const returnHome = () => show(0);
+      if (brandLink) brandLink.addEventListener('click', e => { e.preventDefault(); returnHome(); });
+      if (btnHeaderBack) btnHeaderBack.addEventListener('click', returnHome);
+      if (btnFooterBack) btnFooterBack.addEventListener('click', returnHome);
 
       function toggleNotes() {
         notes.hidden = !notes.hidden;
@@ -3528,21 +4478,15 @@
         else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => { });
       }
 
-
-
       function refresh() {
         readColors();
         const s = sims[cur];
         if (s) { s.fit(); s.draw(); }
       }
 
-      document.getElementById('prev').addEventListener('click', e => { e.currentTarget.blur(); show(cur - 1); });
-      document.getElementById('next').addEventListener('click', e => { e.currentTarget.blur(); show(cur + 1); });
       btnNotes.addEventListener('click', e => { e.currentTarget.blur(); toggleNotes(); });
-      
       document.getElementById('btnFs').addEventListener('click', e => { e.currentTarget.blur(); fullscreen(); });
 
-      
       window.addEventListener('resize', refresh);
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
 
@@ -3551,8 +4495,16 @@
         const t = e.target;
         if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || (t.tagName === 'SUMMARY' && e.key === ' '))) return;
         const k = e.key, s = sims[cur];
-        if (k === 'ArrowRight' || k === 'PageDown') { e.preventDefault(); show(cur + 1); }
-        else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); show(cur - 1); }
+        if (k === 'Escape') {
+          if (cur !== 0) show(0);
+        }
+        else if (k === '/') {
+          if (cur === 0 && simSearch) {
+            e.preventDefault();
+            simSearch.focus();
+            simSearch.select();
+          }
+        }
         else if (k === ' ') {
           if (s) {
             e.preventDefault();
@@ -3565,32 +4517,9 @@
         else if (k === '.') { if (s) s.nextStage(); }
         else if (k === 'n' || k === 'N') toggleNotes();
         else if (k === 'f' || k === 'F') fullscreen();
-        
         else if (k === 'Home') show(0);
-        else if (k === 'End') show(slides.length - 1);
-        else if (/^[1-8]$/.test(k)) show(+k - 1);
+        else if (cur === 0 && /^[1-7]$/.test(k)) show(+k);
       });
-
-
-      /* Touch swipe gestures for mobile navigation */
-      let touchStartX = 0, touchStartY = 0;
-      window.addEventListener('touchstart', e => {
-        if (e.touches && e.touches.length === 1) {
-          touchStartX = e.touches[0].clientX;
-          touchStartY = e.touches[0].clientY;
-        }
-      }, { passive: true });
-
-      window.addEventListener('touchend', e => {
-        if (e.changedTouches && e.changedTouches.length === 1) {
-          const dx = e.changedTouches[0].clientX - touchStartX;
-          const dy = e.changedTouches[0].clientY - touchStartY;
-          if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4) {
-            if (dx < 0) show(cur + 1);
-            else show(cur - 1);
-          }
-        }
-      }, { passive: true });
 
       let last = performance.now();
       function frame(now) {
@@ -3602,7 +4531,7 @@
       }
 
       const h = parseInt((location.hash || '').slice(1), 10);
-      show(h >= 1 && h <= slides.length ? h - 1 : 0);
+      show(h >= 1 && h <= slides.length - 1 ? h : 0);
       requestAnimationFrame(frame);
 
       window.__sims = sims;
