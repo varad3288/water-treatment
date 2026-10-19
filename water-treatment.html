@@ -1801,7 +1801,7 @@
               <button id="clearSearch" class="clear-btn" title="Clear search" aria-label="Clear search" hidden>&times;</button>
             </div>
             <div class="search-status" id="searchStatus" aria-live="polite">
-              <span id="simCount">7 Active Modules available</span>
+              <span id="simCount">6 Active Modules available</span>
               <span class="search-hint">Press <kbd>/</kbd> to search</span>
             </div>
           </div>
@@ -1913,22 +1913,7 @@
             </div>
           </div>
 
-          <!-- 7: Compare -->
-          <div class="sim-card" data-idx="7" data-tags="process comparison matrix engineering selection zeolite dm ro ed hardness tds selection criteria" tabindex="0" role="button" aria-label="Launch Process Comparison Matrix">
-            <div class="card-top">
-              <span class="card-num">07</span>
-              <span class="card-tag" style="--c: var(--so4)">Selection Matrix</span>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">Process Matrix &amp; Selection</h3>
-              <p class="card-desc">Engineering decision matrix comparing residual hardness, TDS rejection, regeneration economics, and operating envelopes.</p>
-            </div>
-            <div class="card-foot">
-              <div class="card-chem">Zeolite vs DM vs ED vs RO</div>
-              <div class="card-action">View Matrix <span class="arr">&rarr;</span></div>
-            </div>
           </div>
-        </div>
 
         <div id="noResults" class="no-results" hidden>
           <p>No simulations found matching "<span id="noResultsTerm"></span>"</p>
@@ -2117,66 +2102,7 @@
       <div class="notes">Distinguish clearly: Priming is mechanical (violent boiling drags droplets); Foaming is chemical (oil or alkalis lower surface tension and create stable foam). Both cause carry-over of wet steam. Watch the gauge glass flicker during priming and foaming, and point out how castor oil instantly collapses foam bubbles while blow-down flushes the sludge.</div>
     </section>
 
-    <!-- 8 · COMPARE -->
-    <section class="slide wide" data-name="Compare">
-      <p class="eyebrow">Comprehensive Engineering Comparison</p>
-      <h2>Industrial water treatment comparison</h2>
-      <div class="tw">
-        <table>
-          <thead>
-            <tr>
-              <th>Process</th>
-              <th>Operating Principle</th>
-              <th>Hardness Achieved</th>
-              <th>Total Dissolved Solids (TDS)</th>
-              <th>Regenerant Chemical</th>
-              <th>Chief Limitation</th>
-              <th>Boiler Suitability</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Zeolite (Permutit)</td>
-              <td class="chem">Reversible cation exchange on aluminosilicate: Ca²⁺ / Mg²⁺ swap for 2 Na⁺</td>
-              <td>~10–15 ppm</td>
-              <td>Unchanged (replaces Ca/Mg salts with equivalent Na salts)</td>
-              <td>10% NaCl brine solution</td>
-              <td>Softened but not demineralised; NaHCO_{3} decomposes to NaOH causing caustic embrittlement. Fouled by turbidity, Fe, Mn.</td>
-              <td>Low to medium pressure boilers only (&lt; 20 bar)</td>
-            </tr>
-            <tr>
-              <td>Ion Exchange (Demineralisation)</td>
-              <td class="chem">Dual-bed synthetic resins: Cation bed releases H⁺, Anion bed releases OH⁻ → H₂O</td>
-              <td>&lt; 2 ppm (near zero)</td>
-              <td>Virtually zero (electrical conductivity &lt; 0.1 μS/cm)</td>
-              <td>Dilute HCl / H_{2}SO_{4} (cation), Dilute NaOH (anion)</td>
-              <td>High capital cost, recurring acid/alkali expense, resin bed damaged by turbidity.</td>
-              <td>High-pressure &amp; supercritical boilers (&gt; 60 bar)</td>
-            </tr>
-            <tr>
-              <td>Electrodialysis (ED)</td>
-              <td>DC electric field drives ions across alternating cation (CM) and anion (AM) selective membranes</td>
-              <td>Reduces bulk mineral ions by 80–90%</td>
-              <td>Significantly reduced in product compartments</td>
-              <td>None (purely electrical energy driven)</td>
-              <td>High electrical power cost at high salinity; leaves uncharged organics, silica, and bacteria untouched.</td>
-              <td>Brackish water desalination; feed pre-treatment</td>
-            </tr>
-            <tr>
-              <td>Reverse Osmosis (RO)</td>
-              <td>Hydraulic pressure P &gt; π forces solvent backward through semi-permeable membrane</td>
-              <td>Rejects 95–99% of dissolved mineral ions</td>
-              <td>Reduced by 95–99% (near-distilled purity)</td>
-              <td>None (15–40 bar mechanical pump power)</td>
-              <td>Membranes sensitive to chlorine, pH extremes, and scaling; requires pre-treatment.</td>
-              <td>High-pressure boilers, seawater/brackish feed, pure water</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="foot-note">Summary Takeaway: Zeolite softens water for low-pressure systems; Ion Exchange and RO deliver ultra-pure demineralised feed for high-pressure boilers; Electrodialysis desalts brackish water via electric fields. Neglected feed water leads directly to priming, foaming, and tube rupture.</p>
-      <div class="notes">Read across one row at a time. Zeolite is the cheap softener for low-pressure heating systems. Ion exchange gives the purest water suitable for thermal power stations. Electrodialysis desalts brackish water without regeneration chemicals but consumes DC electricity and ignores non-ionic impurities. Close by stating that priming and foaming are the direct operational consequences of neglected feed water treatment.</div>
-    </section>
+    
 
   </main>
 
@@ -4369,7 +4295,7 @@
           if (match) matches++;
         });
         if (simCount) {
-          simCount.textContent = q ? (matches + ' matching simulation' + (matches === 1 ? '' : 's')) : '7 Simulations available';
+          simCount.textContent = q ? (matches + ' matching simulation' + (matches === 1 ? '' : 's')) : '6 Simulations available';
         }
         if (clearSearch) clearSearch.hidden = !q;
         if (noResults) {
